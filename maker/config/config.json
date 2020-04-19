@@ -1,0 +1,49 @@
+{
+    "config": {
+        "generate_seed": {
+            "file_seed": {
+                "chinese_last_name": "chinese_last_name_top100.txt",
+                "common_english_name": "english_name.txt",
+                "common_number": "common_number.txt",
+                "keyboard_walk": "4_keyboard_walk.txt",
+                "year_4": "4_years.txt",
+                "year_2": "2_years.txt",
+                "english_name_with_chinese_last_name": "english_name_with_chinese_last_name.txt"
+            },
+            "domain": [ "baidu.com", "badidu" ],
+            "special_letter": [ "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+" ],
+            "year": [ "2018", "2019", "2020" ]
+        },
+        "generate_rule": {
+            "formation": {
+                "content": [ "common_number domain year" ],
+                "keep_in_order": true
+            },
+            "capitalize": false,
+            "transform": {
+                "active": false,
+                "rules": {
+                    "a": "4",
+                    "e": "3",
+                    "g": "9",
+                    "i": "1",
+                    "o": "0",
+                    "s": "5",
+                    "t": "7",
+                    "z": "2"
+                }
+            }
+        },
+        "generate_filter": {
+            "minimum_length": 6,
+            "optional": {
+                "number": true,
+                "lower_letter": true,
+                "upper_letter": true,
+                "special_letter": true
+            },
+            "achieve_optional": 2
+        },
+        "generate_additional": [ "weak_pass_chinese.txt", "weak_pass_top100.txt", "weak_pass_keyboard_walk.txt" ]
+    }
+}
