@@ -2,11 +2,13 @@
 
 > A high-performance, customizable, cross-platform and modern C ++ password dictionary generator
   
+[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
+
 BlueWingTan is pleased to support the cyber security open source community by making Password Maker available.
   
 Copyright (C) 2020 BlueWingTan. All rights reserved.
   
-- [Password Maker GitHub](https://github.com/bluewingtan/passwordmaker )
+- [Password Maker GitHub](https://bluewingtan.github.io/password_maker/ )
 - Password Maker Document
   - English
   - [简体中文](./maker/doc/Chinese.md )

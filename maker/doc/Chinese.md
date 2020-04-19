@@ -2,11 +2,13 @@
 
 > 一款高性能、可定制、跨平台和使用现代C++的密码字典生成器
   
+[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
+
 能够为信息安全开源界做出一点微小的贡献，我感到很开心。
   
 版权所有 (C) 2020 BlueWingTan。保留所有权利。
   
-- [Password Maker GitHub](https://github.com/bluewingtan/passwordmaker )
+- [Password Maker GitHub](https://bluewingtan.github.io/password_maker/ )
 - Password Maker 文档
   - [English](../../README.md)
   - 简体中文
