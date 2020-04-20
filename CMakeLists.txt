@@ -6,15 +6,20 @@ else()
     cmake_policy(VERSION 3.17)
 endif()
 
-set(VERSION_REGEX "#define PASSWORD_MAKER_VERSION[ \t]+\"(.+)\"")
+# The version number.
+set (Password_Maker_VERSION_MAJOR 0)
+set (Password_Maker_VERSION_MINOR 0)
+set (Password_Maker_VERSION_PATCH 2)
+set (Password_Maker_VERSION "0.0.2")
+string(TIMESTAMP Password_Maker_COMPILE_DATE "%Y-%m-%d")
 
-# Read in the line containing the version
-file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/maker/inc/version.h"
-     VERSION_STRING REGEX ${VERSION_REGEX})
+project("password_maker" LANGUAGES CXX VERSION ${Password_Maker_VERSION})
 
-# Pick out just the version
-string(REGEX REPLACE ${VERSION_REGEX} "\\1" VERSION_STRING "${VERSION_STRING}")
-
-project("password_maker" LANGUAGES CXX VERSION ${VERSION_STRING})
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${CMAKE_CURRENT_SOURCE_DIR}/maker/inc/version.h.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/maker/inc/version.h"
+)
 
 add_subdirectory("maker")

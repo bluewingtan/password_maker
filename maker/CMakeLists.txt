@@ -1,8 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-set(TARGET_NAME maker)
+set(TARGET_NAME "maker")
 if(NOT CMAKE_BUILD_TYPE) 
-
     set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif(NOT CMAKE_BUILD_TYPE)
 

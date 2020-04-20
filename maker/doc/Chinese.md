@@ -2,7 +2,7 @@
 
 > 一款高性能、可定制、跨平台和使用现代C++的密码字典生成器
   
-[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
 
 能够为信息安全开源界做出一点微小的贡献，我感到很开心。
   
@@ -16,6 +16,7 @@
 ##  目录
   
 - [简介](#简介 )
+- [变更](#变更 )
 - [兼容性](#兼容性 )
 - [编译](#编译 )
 - [文件组织](#文件组织 )
@@ -49,6 +50,16 @@ Password Maker 是一款使用现代C++编写的密码字典生成器，它的�
   
 - [Brute-force attack](https://www.wikiwand.com/en/Brute-force_attack )
   
+## 变更
+
+- 修复了错误的序列化时机导致无输出的问题 (#1)
+- 使用 `cbegin`/`cend` 来代替常量循环中的 `begin`/`end`
+- 移除无用的 `_appedLock`
+- 添加了`PasswordMaker`构造函数的`线程数量`参数
+- 增加了命令行参数 `-c/--config` 和 `-t/--thread`
+
+更多变更日志请参阅 [change log (英文)](CHANGELOG.md).
+
 ##  兼容性
   
   
@@ -126,7 +137,7 @@ Password Maker 使用 [CMake](https://cmake.org/ ) 编译（要求 3.14 及以�
         },
         "generate_rule": {
             "formation": {
-                "content": [ "common_number domain year" ],
+                "content": [ "keyboard_walk year chinese_last_name" ],
                 "keep_in_order": true
             },
             "capitalize": false,

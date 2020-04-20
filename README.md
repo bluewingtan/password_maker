@@ -2,7 +2,7 @@
 
 > A high-performance, customizable, cross-platform and modern C ++ password dictionary generator
   
-[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/releases) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/pulls) [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bluewingtan/password_maker?style=flat-square)](https://github.com/bluewingtan/password_maker/tags) ![PoweredBy](https://img.shields.io/badge/powered_by-BlueWingTan-blue?style=flat-square) ![PoweredBy](https://img.shields.io/badge/language-C%2B%2B-blueviolet?style=flat-square)
 
 BlueWingTan is pleased to support the cyber security open source community by making Password Maker available.
   
@@ -16,6 +16,7 @@ Copyright (C) 2020 BlueWingTan. All rights reserved.
 ##  Table of Contents
 
 - [Introduction](#introduction )
+- [Changes](#changes )
 - [Compatibility](#compatibility )
 - [Compile](#compile )
 - [File Organization](#file-organization )
@@ -31,8 +32,7 @@ Copyright (C) 2020 BlueWingTan. All rights reserved.
 - [Copyright and Licensing](#copyright-and-licensing )
   
 ##  Introduction
-  
-  
+
 Password Maker is a password dictionary generator written in modern C++，It was inspired by [passmaker](https://github.com/bit4woo/passmaker ). Mainly used for information security practitioners to conduct internal audits and RED TEAMs for penetration testing.
   
 - Password Maker is **high performance**. Using reasonable multi-thread acceleration, it can quickly generate a long password dictionary.
@@ -48,9 +48,20 @@ In cryptanalysis and computer security, a dictionary attack is a form of brute f
 - [Dictionary attack](https://www.wikiwand.com/en/Dictionary_attack )
   
 - [Brute-force attack](https://www.wikiwand.com/en/Brute-force_attack )
-  
+
+## Changes
+
+The latest version is **v0.0.2**.
+
+- Fix the timing of serialization (#1)
+- Use `cbegin`/`cend` to replace `begin`/`end` in const variables loops
+- Remove unusable `_appedLock`
+- Added thread number control parameter when initialize `PasswordMaker`
+- Added command line parameters `-c/--config` and `-t/--thread`
+
+For other changes please refer to [change log](CHANGELOG.md).
+
 ##  Compatibility
-  
   
 Password Maker can be compiled across platforms, and the following platforms/compilers are expected to complete the compilation:
   
@@ -126,7 +137,7 @@ The default parameter configuration (`./config/config.json`) is as follows:
         },
         "generate_rule": {
             "formation": {
-                "content": [ "common_number domain year" ],
+                "content": [ "keyboard_walk year chinese_last_name" ],
                 "keep_in_order": true
             },
             "capitalize": false,

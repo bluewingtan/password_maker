@@ -18,6 +18,7 @@ public:
     auto enqueue(F&& f, Args&&... args) 
         -> std::future<typename std::result_of<F(Args...)>::type>;
     ~ThreadPool();
+    auto size() const;
 private:
     // need to keep track of threads so we can join them
     std::vector< std::thread > workers;
@@ -81,6 +82,10 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
     }
     condition.notify_one();
     return res;
+}
+
+inline auto ThreadPool::size() const {
+    return workers.size();
 }
 
 // the destructor joins all threads

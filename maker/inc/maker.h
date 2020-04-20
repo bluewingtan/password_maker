@@ -1,5 +1,105 @@
 ﻿#pragma once
 
+/*++
+
+Copyright Notice
+
+MIT License
+
+Copyright (C) 2020 BlueWingTan. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+ThreadPool.h
+Copyright (c) 2012 Jakob Progsch, Václav Zeman
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+
+   3. This notice may not be removed or altered from any source
+   distribution.
+
+json.h
+MIT License
+
+Copyright (c) 2013-2020 Niels Lohmann
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+spdlog
+The MIT License (MIT)
+
+Copyright (c) 2016 Gabi Melman.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+-- NOTE: Third party dependecy used by this sofware --
+This software depends on the fmt lib (MIT License),
+and users must comply to its license: https://github.com/fmtlib/fmt/blob/master/LICENSE.rst
+
+--*/
+
 #include <ctime>
 #include <cctype>
 
@@ -18,35 +118,35 @@
 #include <functional>
 
 #include <json.h>
-#include <ThreadPool.h>
+#include <ThreadPool.h> 
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace bwt {
 // String literal
-constexpr char* CONFIG = "config";
-constexpr char* GENERATE_SEED = "generate_seed";
-constexpr char* FILE_SEED = "file_seed";
-constexpr char* GENERATE_RULE = "generate_rule";
-constexpr char* CAPITALIZE = "capitalize";
-constexpr char* FORMATION = "formation";
-constexpr char* CONTENT = "content";
-constexpr char* KEEP_IN_ORDER = "keep_in_order";
-constexpr char* TRANSFORM = "transform";
-constexpr char* ACTIVE = "active";
-constexpr char* RULES = "rules";
-constexpr char* GENERATE_FILTER = "generate_filter";
-constexpr char* MINIMUM_LENGTH = "minimum_length";
-constexpr char* OPTIONAL_FILTER = "optional";
-constexpr char* NUMBER = "number";
-constexpr char* LOWER_LETTER = "lower_letter";
-constexpr char* UPPER_LETTER = "upper_letter";
-constexpr char* SPECIAL_LETTER = "special_letter";
-constexpr char* ACHIEVE_OPTIONAL = "achieve_optional";
-constexpr char* GENERATE_ADDITIONAL = "generate_additional";
+constexpr const char* CONFIG = "config";
+constexpr const char* GENERATE_SEED = "generate_seed";
+constexpr const char* FILE_SEED = "file_seed";
+constexpr const char* GENERATE_RULE = "generate_rule";
+constexpr const char* CAPITALIZE = "capitalize";
+constexpr const char* FORMATION = "formation";
+constexpr const char* CONTENT = "content";
+constexpr const char* KEEP_IN_ORDER = "keep_in_order";
+constexpr const char* TRANSFORM = "transform";
+constexpr const char* ACTIVE = "active";
+constexpr const char* RULES = "rules";
+constexpr const char* GENERATE_FILTER = "generate_filter";
+constexpr const char* MINIMUM_LENGTH = "minimum_length";
+constexpr const char* OPTIONAL_FILTER = "optional";
+constexpr const char* NUMBER = "number";
+constexpr const char* LOWER_LETTER = "lower_letter";
+constexpr const char* UPPER_LETTER = "upper_letter";
+constexpr const char* SPECIAL_LETTER = "special_letter";
+constexpr const char* ACHIEVE_OPTIONAL = "achieve_optional";
+constexpr const char* GENERATE_ADDITIONAL = "generate_additional";
 
-constexpr char* DIST_PATH = "./dist/";
-constexpr char* CONFIG_PATH = "./config/";
-constexpr char* GENERATE_PATH = "./generated/";
+constexpr const char* DIST_PATH = "./dist/";
+constexpr const char* CONFIG_PATH = "./config/";
+constexpr const char* GENERATE_PATH = "./generated/";
 
 
 class PasswordMaker {
@@ -54,8 +154,10 @@ public:
 	/// <summary> Constructor. </summary>
 	/// <remarks> BlueWingTan, 2020/4/16. </remarks>
 	/// <param name="configFileName"> [in,out] Filename of the configuration file. </param>
-	PasswordMaker(const std::string& configFileName) :
-		_configFileName(CONFIG_PATH + configFileName) {
+	PasswordMaker(const std::string& configFileName, const std::size_t threadNumber = std::thread::hardware_concurrency()) :
+		_configFileName(CONFIG_PATH + configFileName),
+		_threadPool(threadNumber)
+	{
 		_workerLogger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%n] [%^%l%$] [id:%6t] %v");
 	}
 
@@ -63,6 +165,9 @@ public:
 
 public:
 
+	/// <summary> Generates password dictionary. </summary>
+	/// <remarks> BlueWingTan, 2020/4/20. </remarks>
+	/// <returns> True if it succeeds, false if it fails. </returns>
 	bool generate() {
 		_mainLogger->info("Loading configuration from {}.", _configFileName);
 		if (!load_config()) {
@@ -80,7 +185,7 @@ public:
 		_mainLogger->info("Getting serial file name.");
 		get_serial_file_name();
 
-		_mainLogger->info("Generating password with multiple thread, pool size are {}.", std::thread::hardware_concurrency());
+		_mainLogger->info("Generating password with multiple thread, pool size are {}.", _threadPool.size());
 		for (const auto& singleFormation : multipleFormations) {
 			_mainLogger->info("Generating formation [{}].", std::accumulate(singleFormation.begin(), singleFormation.end(), std::string(""), [&](auto& lhs, const auto& rhs) {
 				return lhs.empty() ? rhs : lhs + " " + rhs; }));
@@ -89,7 +194,7 @@ public:
 			std::size_t currentIndex = 0;
 			for (const auto& formation : singleFormation) {
 				_mainLogger->info("Generating pattern [{}].", formation);
-				auto& contents = get_seed_content(formation);
+				auto contents(get_seed_content(formation));
 				// Last loop turn to serial
 				_mainLogger->info("Initiating worker processor.");
 				map_to_processor(results, contents, (currentIndex++ == singleFormation.size() - 1));
@@ -105,13 +210,12 @@ public:
 
 private:
 	std::mutex _serialLock;
-	std::mutex _appedLock;
 	std::string _serialFileName;
 	std::string _configFileName;
 	nlohmann::json _configuration;
 	std::shared_ptr<spdlog::logger> _mainLogger{ spdlog::stdout_color_mt("Main") };
 	std::shared_ptr<spdlog::logger> _workerLogger{ spdlog::stdout_color_mt("Worker") };
-	ThreadPool _threadPool{ std::thread::hardware_concurrency() };
+	ThreadPool _threadPool;
 
 	using attribure_t = struct {
 		bool optNumber;
@@ -121,6 +225,7 @@ private:
 		std::size_t achiveOptional;
 		std::size_t minimumLength;
 	};
+	using string_array_t = std::vector<std::string>;
 
 private:
 
@@ -130,13 +235,13 @@ private:
 	/// <param name="addon">	    The addon. </param>
 	/// <param name="shouldSerial"> True if should serial. </param>
 	/// <returns> True if it succeeds, false if it fails. </returns>
-	bool processor(std::vector<std::string>& base, const std::vector<std::string>& addon, bool shouldSerial) {
+	bool processor(string_array_t& base, const string_array_t& addon, const bool shouldSerial) {
 		_workerLogger->info("Processing with base size {} and addon size {}.", base.size(), addon.size());
-		auto& generated = password_generate(base, addon);
+		auto generated(password_generate(base, addon));
 		password_capitalize(generated);
 		password_transform(generated);
-		password_filter(generated);
 		if (shouldSerial) {
+			password_filter(generated);
 			_workerLogger->info("Serializing generated password with size {}.", generated.size());
 			serial(generated);
 		}
@@ -150,49 +255,50 @@ private:
 	/// <param name="alreadyGenerated"> [in,out] The already generated. </param>
 	/// <param name="formationContent"> The formation content. </param>
 	/// <param name="serialThisTurn">   True to serial this turn. </param>
-	void map_to_processor(std::vector<std::string>& alreadyGenerated, const std::vector<std::string>& formationContent, bool serialThisTurn) {
+	void map_to_processor(string_array_t& alreadyGenerated, const string_array_t& formationContent, const bool serialThisTurn) {
+		const auto threadWokerNumber = _threadPool.size();
 		// Multiple thread optimization
 		// check alreadyGenerated and formationContent size
-		// if the size less than std::thread::hardware_concurrency()
+		// if the size less than threadWokerNumber
 		// then should not start thread pool
-		if (alreadyGenerated.size() < std::thread::hardware_concurrency()) {
-			if (formationContent.size() < std::thread::hardware_concurrency()) {
+		if (alreadyGenerated.size() < threadWokerNumber) {
+			if (formationContent.size() < threadWokerNumber) {
 				// Single thread to process
 				processor(alreadyGenerated, formationContent, serialThisTurn);
 			} else {
 				// Proceed the formation content
-				auto properLoad = formationContent.size() / std::thread::hardware_concurrency();
-				auto extraLoad = formationContent.size() % std::thread::hardware_concurrency();
-				auto currentIt = formationContent.cbegin();
+				const auto properLoad = formationContent.size() / threadWokerNumber;
+				const auto extraLoad = formationContent.size() % threadWokerNumber;
+				auto currentIt = formationContent.begin();
 				std::vector<std::future<bool>> results;
-				results.reserve(std::thread::hardware_concurrency());
-				for (std::size_t i = 0; i < std::thread::hardware_concurrency() - 1; i++, std::advance(currentIt, properLoad)) {
-					results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), std::vector<std::string>(currentIt, currentIt + properLoad), serialThisTurn));
+				results.reserve(threadWokerNumber);
+				for (std::size_t i = 0; i < threadWokerNumber - 1; i++, std::advance(currentIt, properLoad)) {
+					results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), string_array_t(currentIt, currentIt + properLoad), serialThisTurn));
 				}
-				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), std::vector<std::string>(currentIt, currentIt + properLoad + extraLoad), serialThisTurn));
+				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), string_array_t(currentIt, currentIt + properLoad + extraLoad), serialThisTurn));
 				// Wait future
 				std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
 			}
 		} else {
 			// Proceed the generated content
-			auto properLoad = alreadyGenerated.size() / std::thread::hardware_concurrency();
-			auto extraLoad = alreadyGenerated.size() % std::thread::hardware_concurrency();
-			auto currentIt = alreadyGenerated.cbegin();
+			const auto properLoad = alreadyGenerated.size() / threadWokerNumber;
+			const auto extraLoad = alreadyGenerated.size() % threadWokerNumber;
+			auto currentIt = alreadyGenerated.begin();
 			std::vector<std::future<bool>> results;
-			std::vector<std::vector<std::string>> managed;
-			managed.reserve(std::thread::hardware_concurrency());
-			results.reserve(std::thread::hardware_concurrency());
-			for (size_t i = 0; i < std::thread::hardware_concurrency() - 1; i++, std::advance(currentIt, properLoad)) {
-				managed.emplace_back(std::vector<std::string>(currentIt, currentIt + properLoad));
+			std::vector<string_array_t> managed;
+			managed.reserve(threadWokerNumber);
+			results.reserve(threadWokerNumber);
+			for (size_t i = 0; i < threadWokerNumber - 1; i++, std::advance(currentIt, properLoad)) {
+				managed.emplace_back(string_array_t(currentIt, currentIt + properLoad));
 			}
-			managed.emplace_back(std::vector<std::string>(currentIt, currentIt + properLoad + extraLoad));
+			managed.emplace_back(string_array_t(currentIt, currentIt + properLoad + extraLoad));
 			std::for_each(managed.begin(), managed.end(), [&](auto& generatedSlice) {
 				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(generatedSlice), std::cref(formationContent), serialThisTurn)); });
 			// Wait future
 			std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
 			// TODO
 			// Optimization
-			alreadyGenerated = std::accumulate(managed.begin(), managed.end(), std::vector<std::string>(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; });
+			alreadyGenerated = std::accumulate(managed.begin(), managed.end(), string_array_t(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; });
 		}
 	}
 
@@ -215,19 +321,24 @@ private:
 	inline void get_serial_file_name() {
 		std::stringstream ss;
 		try {
-			const auto nowTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-			ss << std::put_time(std::localtime(&nowTime), "%Y-%m-%d-%H-%M-%S.txt");
+			const auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+			ss << std::put_time(std::localtime(&now), "%Y-%m-%d-%H-%M-%S.txt");
 		} catch (const std::exception& ex) {
 			_mainLogger->critical("Failed to serialize the file time with {}.", ex.what());
 		}
 		_serialFileName = ss.str();
 	}
 
-	/// <summary> Serial safe implementation. </summary>
-	/// <remarks> BlueWingTan, 2020/4/19. </remarks>
+	/// <summary>
+	///		<para> Serials the given contents, should be invoked after get_serial_file_name(). </para>
+	///		<para> This function is thread-safe by using std::lock_guard. </para>
+	///	</summary>
+	/// <remarks> BlueWingTan, 2020/4/20. </remarks>
 	/// <param name="contents"> The contents. </param>
 	/// <returns> True if it succeeds, false if it fails. </returns>
-	bool serial_safe_impl(const std::vector<std::string>& contents) {
+	bool serial(const string_array_t& contents) {
+		// Make sure serial_safe_impl already returned
+		// to prevent early extract contents
 		std::lock_guard<std::mutex> lock(_serialLock);
 		std::fstream file(GENERATE_PATH + _serialFileName, std::fstream::app | std::fstream::out);
 
@@ -235,44 +346,29 @@ private:
 			_mainLogger->critical("Failed to open {} to serialize.", GENERATE_PATH + _serialFileName);
 			return false;
 		} else {
-			std::for_each(contents.begin(), contents.end(), [&](auto& content) {file << content << std::endl; });
+			std::for_each(contents.cbegin(), contents.cend(), [&](auto& content) {file << content << std::endl; });
 		}
 		return true;
-	}
-
-	/// <summary>
-	///		<para> Serials the given contents, should be invoked after get_serial_file_name(). </para>
-	///		<para> This function is thread-safe by using std::lock_guard. </para>
-	///	</summary>
-	/// <remarks> BlueWingTan, 2020/4/17. </remarks>
-	/// <param name="contents"> The contents. </param>
-	/// <returns> True if it succeeds, false if it fails. </returns>
-	bool serial(const std::vector<std::string>& contents) {
-		// Make sure serial_safe_impl already returned
-		// to prevent early extract contents
-		return serial_safe_impl(contents);
 	}
 
 	/// <summary> Replace from to. </summary>
 	/// <remarks> BlueWingTan, 2020/4/19. </remarks>
 	/// <param name="from"> Source for the. </param>
 	/// <param name="to">   [in,out] to. </param>
-	inline void replace_from_to(const std::vector<std::string>& from, std::vector<std::string>& to) {
+	inline void replace_from_to(const string_array_t& from, string_array_t& to) const {
 		to.clear();	// In standard, clear() do not release underlying buffers
-		std::copy(from.begin(), from.end(), std::back_inserter(to));
+		std::copy(from.cbegin(), from.cend(), std::back_inserter(to));
 	}
 
 	/// <summary> Estimate total vector capacity. </summary>
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	/// <param name="formations"> The formations. </param>
 	/// <returns> Estimated capacity. </returns>
-	std::size_t estimate_capacity(const std::vector<std::string>& formations) const {
+	std::size_t estimate_capacity(const string_array_t& formations) const {
 		std::vector<std::size_t> estimateSize;
 		std::size_t singleFormationCapacity = 1;
 
-		for (const auto& content : formations) {
-			singleFormationCapacity *= get_seed_content(content).size();
-		}
+		std::for_each(formations.cbegin(), formations.cend(), [&](const auto& content) {singleFormationCapacity *= get_seed_content(content).size(); });
 		estimateSize.emplace_back(singleFormationCapacity);
 		return *std::max_element(estimateSize.begin(), estimateSize.end());
 	}
@@ -280,21 +376,21 @@ private:
 	/// <summary> Gets generate formation. </summary>
 	/// <remarks> BlueWingTan, 2020/4/17. </remarks>
 	/// <returns> The generate formation. </returns>
-	std::vector<std::vector<std::string>> get_generate_formation() const {
-		std::vector<std::vector<std::string>> multipleFormations;
+	std::vector<string_array_t> get_generate_formation() const {
+		std::vector<string_array_t> multipleFormations;
 		try {
-			for (const auto& item : _configuration[CONFIG][GENERATE_RULE][FORMATION][CONTENT].get<std::vector<std::string>>()) {
+			for (const auto& item : _configuration[CONFIG][GENERATE_RULE][FORMATION][CONTENT].get<string_array_t>()) {
 				// Tokenize the formation content
 				std::regex delimiter(R"(\s+)");
-				auto singleFormation = std::vector<std::string>(
-					std::sregex_token_iterator(item.begin(), item.end(), delimiter, -1),
+				auto singleFormation = string_array_t(
+					std::sregex_token_iterator(item.cbegin(), item.cend(), delimiter, -1),
 					std::sregex_token_iterator());
 
 				if (_configuration[CONFIG][GENERATE_RULE][FORMATION][KEEP_IN_ORDER].get<bool>()) {
 					multipleFormations.emplace_back(singleFormation);
 				} else {
 					// First we should arrange the formation
-					std::vector<std::vector<std::string>> permutation;
+					std::vector<string_array_t> permutation;
 					std::sort(singleFormation.begin(), singleFormation.end());
 					do {
 						permutation.emplace_back(singleFormation);
@@ -318,8 +414,8 @@ private:
 	/// <remarks> BlueWingTan, 2020/4/17. </remarks>
 	/// <param name="formations"> The formations. </param>
 	/// <returns> True if it succeeds, false if it fails. </returns>
-	bool check_generate_formation(const std::vector<std::vector<std::string>>& formations) const {
-		std::vector<std::string> legalSeeds;
+	bool check_generate_formation(const std::vector<string_array_t>& formations) const {
+		string_array_t legalSeeds;
 		try {
 			const auto& generateSeed = _configuration[CONFIG][GENERATE_SEED];
 			for (const auto& generalSeed : generateSeed.items()) {
@@ -354,8 +450,8 @@ private:
 	/// <remarks> BlueWingTan, 2020/4/17. </remarks>
 	/// <param name="formation"> The formation. </param>
 	/// <returns> The seed content. </returns>
-	std::vector<std::string> get_seed_content(const std::string& formation) const {
-		std::vector<std::string> contents;
+	string_array_t get_seed_content(const std::string& formation) const {
+		string_array_t contents;
 		try {
 			auto fileSeeds = _configuration[CONFIG][GENERATE_SEED][FILE_SEED];
 			auto fileSeedIndex = fileSeeds.find(formation);
@@ -378,7 +474,7 @@ private:
 				if (*generalSeedIndex == FILE_SEED) {
 					_mainLogger->critical("file_seed is reversed key word that should not used.");
 				} else {
-					auto generalSeedContent = generalSeedIndex->get<std::vector<std::string>>();
+					auto generalSeedContent = generalSeedIndex->get<string_array_t>();
 					contents.insert(contents.end(), generalSeedContent.begin(), generalSeedContent.end());
 				}
 			} else {
@@ -386,7 +482,6 @@ private:
 				// never goto here
 				_mainLogger->critical("Wild formation as {}, is check_generate_formation invoked?", formation);
 			}
-
 		} catch (const std::exception& ex) {
 			_mainLogger->critical("Failed to parse configuration file for seed content acquire with {}.", ex.what());
 		}
@@ -401,20 +496,20 @@ private:
 	/// <returns> Transformed password. </returns>
 	std::string password_transform_single(const std::string& password, const std::map<std::string, std::string>& rules) const {
 		std::string replaced = password;
-		std::for_each(rules.begin(), rules.end(), [&](const auto& rule) {std::regex_replace(replaced, std::regex(rule.first), rule.second); });
+		std::for_each(rules.cbegin(), rules.cend(), [&](const auto& rule) {std::regex_replace(replaced, std::regex(rule.first), rule.second); });
 		return replaced;
 	}
 
 	/// <summary> Transform password with specified rules, and insert into the original container. </summary>
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	/// <param name="passwords"> [in,out] The passwords. </param>
-	void password_transform(std::vector<std::string>& passwords) const {
+	void password_transform(string_array_t& passwords) const {
 		try {
 			const auto& transformConfig = _configuration[CONFIG][GENERATE_RULE][TRANSFORM];
 			if (transformConfig[ACTIVE].get<bool>()) {
 				// Activated
 				const auto& rules = transformConfig[RULES].get<std::map<std::string, std::string>>();
-				std::vector<std::string> transformedPasswords;
+				string_array_t transformedPasswords;
 
 				std::for_each(passwords.begin(), passwords.end(), [&](const auto& password) {
 					auto transformed(password_transform_single(password, rules));
@@ -445,13 +540,13 @@ private:
 			{[&](std::string::value_type ch) { return std::isdigit(ch) != 0; }, attributes.optNumber, false},
 			{[&](std::string::value_type ch) {
 				const auto& specialLetters = get_seed_content(SPECIAL_LETTER);
-				std::for_each(specialLetters.begin(), specialLetters.end(),
+				std::for_each(specialLetters.cbegin(), specialLetters.cend(),
 							  [&](const auto& letter) { if (letter.find(ch)) { return true; } return false; }); return false; },
 			attributes.optSpecialLetter, false }
 		};
 
 		// Now we check it
-		std::for_each(password.begin(), password.end(), [&](const auto& ch) {
+		std::for_each(password.cbegin(), password.cend(), [&](const auto& ch) {
 			std::for_each(attributeTests.begin(), attributeTests.end(), [&](auto& result) {
 				if (!result.actual) { result.actual = result.test(ch); }}); });
 
@@ -465,7 +560,7 @@ private:
 	/// <summary> Password attributeConfig. </summary>
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	/// <param name="passwords"> [in, out] The passwords. </param>
-	void password_filter(std::vector<std::string>& passwords) const {
+	void password_filter(string_array_t& passwords) const {
 		try {
 			const auto& attributeConfig = _configuration[CONFIG][GENERATE_FILTER];
 			attribure_t attributes{
@@ -486,7 +581,7 @@ private:
 	/// <summary> Password capitalize. </summary>
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	/// <param name="passwords"> [in,out] The passwords. </param>
-	void password_capitalize(std::vector<std::string>& passwords) const {
+	void password_capitalize(string_array_t& passwords) const {
 		try {
 			if (_configuration[CONFIG][GENERATE_RULE][CAPITALIZE].get<bool>()) {
 				std::for_each(passwords.begin(), passwords.end(), [&](auto& password) {password[0] = std::toupper(password[0]); });
@@ -500,11 +595,11 @@ private:
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	/// <param name="base">  [in,out] The base. </param>
 	/// <param name="addon"> The addon. </param>
-	std::vector<std::string> password_generate(std::vector<std::string>& base, const std::vector<std::string>& addon) {
-		std::vector<std::string> generated;
+	string_array_t password_generate(string_array_t& base, const string_array_t& addon) const {
+		string_array_t generated;
 		generated.reserve(std::max(base.size(), std::size_t(1)) * addon.size());
 
-		std::for_each(addon.begin(), addon.end(), [&](const auto& addonSingle) {
+		std::for_each(addon.cbegin(), addon.cend(), [&](const auto& addonSingle) {
 			if (base.empty()) {
 				generated.emplace_back(addonSingle);
 			} else {
@@ -519,10 +614,10 @@ private:
 	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
 	void append_additional_dictionary() {
 		try {
-			for (const auto& additionalDict : _configuration[CONFIG][GENERATE_ADDITIONAL].get<std::vector<std::string>>()) {
+			for (const auto& additionalDict : _configuration[CONFIG][GENERATE_ADDITIONAL].get<string_array_t>()) {
 				std::fstream file(DIST_PATH + additionalDict);
 				if (file) {
-					std::vector<std::string> content;
+					string_array_t content;
 					std::copy(std::istream_iterator<std::string>(file), std::istream_iterator<std::string>(), std::back_inserter(content));
 					serial(content);
 				}

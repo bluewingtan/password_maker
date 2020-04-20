@@ -16,7 +16,7 @@
         },
         "generate_rule": {
             "formation": {
-                "content": [ "common_number domain year" ],
+                "content": [ "keyboard_walk year chinese_last_name" ],
                 "keep_in_order": true
             },
             "capitalize": false,
