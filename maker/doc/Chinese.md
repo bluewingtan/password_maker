@@ -52,13 +52,13 @@ Password Maker 是一款使用现代C++编写的密码字典生成器，它的�
   
 ## 变更
 
-- 修复了错误的序列化时机导致无输出的问题 (#1)
-- 使用 `cbegin`/`cend` 来代替常量循环中的 `begin`/`end`
-- 移除无用的 `_appedLock`
-- 添加了`PasswordMaker`构造函数的`线程数量`参数
-- 增加了命令行参数 `-c/--config` 和 `-t/--thread`
+最新版本是 **v0.0.3**.
 
-更多变更日志请参阅 [change log (英文)](CHANGELOG.md).
+- 修复了种子长度小于线程数时可能引发的数据竞争问题 (#2)
+- 性能改进
+- 修复了中文文档的CHANGELOG链接
+
+更多变更日志请参阅 [change log (英文)](../../CHANGELOG.md).
 
 ##  兼容性
   

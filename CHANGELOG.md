@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org).
 
+## v0.0.3 - 2020-04-21
+
+### Added
+
+None.
+
+### Fixed
+
+- Fixed a data race issue that may be caused when the seed length is less than the number of threads (#2)
+- Fixed `processor` function generation pipe line to capitalize and transform at the right time
+
+### Changed
+
+- Update Chinese documentation with error link of CHANGELOG
+- Improved the coverage of generated data and optimized processing performance
+
 ## v0.0.2 - 2020-04-20
 
 ### Added

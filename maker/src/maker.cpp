@@ -64,6 +64,16 @@ std::string help_content() {
 	return retval;
 }
 
+template<typename App, typename Argc, typename Argv>
+int app_parse(App&& app, Argc&& argc, Argv&& argv) {
+	try {
+        app.parse(argc, argv);
+    } catch(const CLI::ParseError &ex) {
+        return app.exit(ex);
+    }
+	return 0;
+}
+
 int main(int argc, char** argv) {
 	CLI::App app{ help_content() };
 	std::string configFileName{ "config.json" };
@@ -73,7 +83,7 @@ int main(int argc, char** argv) {
 	app.add_option("-c,--config", configFileName, "The configuration filename in ./dist path", true);
 	app.add_option("-t,--thread", threadNumber, "How many threads should be used to generate the password", true);
 
-	CLI11_PARSE(app, argc, argv);
+	app_parse(app, argc, argv);
 
 	std::cout << help_content();
 	bwt::PasswordMaker maker(configFileName, threadNumber);

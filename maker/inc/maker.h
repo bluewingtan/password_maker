@@ -156,8 +156,7 @@ public:
 	/// <param name="configFileName"> [in,out] Filename of the configuration file. </param>
 	PasswordMaker(const std::string& configFileName, const std::size_t threadNumber = std::thread::hardware_concurrency()) :
 		_configFileName(CONFIG_PATH + configFileName),
-		_threadPool(threadNumber)
-	{
+		_threadPool(threadNumber) {
 		_workerLogger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%n] [%^%l%$] [id:%6t] %v");
 	}
 
@@ -230,7 +229,7 @@ private:
 private:
 
 	/// <summary> Processor. </summary>
-	/// <remarks> BlueWingTan, 2020/4/19. </remarks>
+	/// <remarks> BlueWingTan, 2020/4/21. </remarks>
 	/// <param name="base">		    [in,out] The base. </param>
 	/// <param name="addon">	    The addon. </param>
 	/// <param name="shouldSerial"> True if should serial. </param>
@@ -238,12 +237,12 @@ private:
 	bool processor(string_array_t& base, const string_array_t& addon, const bool shouldSerial) {
 		_workerLogger->info("Processing with base size {} and addon size {}.", base.size(), addon.size());
 		auto generated(password_generate(base, addon));
-		password_capitalize(generated);
-		password_transform(generated);
 		if (shouldSerial) {
+			password_capitalize(generated);
+			password_transform(generated);
 			password_filter(generated);
 			_workerLogger->info("Serializing generated password with size {}.", generated.size());
-			serial(generated);
+			password_serial(generated);
 		}
 		replace_from_to(generated, base);
 		_workerLogger->info("Done.");
@@ -251,7 +250,7 @@ private:
 	}
 
 	/// <summary> Map to processor. </summary>
-	/// <remarks> BlueWingTan, 2020/4/18. </remarks>
+	/// <remarks> BlueWingTan, 2020/4/21. </remarks>
 	/// <param name="alreadyGenerated"> [in,out] The already generated. </param>
 	/// <param name="formationContent"> The formation content. </param>
 	/// <param name="serialThisTurn">   True to serial this turn. </param>
@@ -265,19 +264,6 @@ private:
 			if (formationContent.size() < threadWokerNumber) {
 				// Single thread to process
 				processor(alreadyGenerated, formationContent, serialThisTurn);
-			} else {
-				// Proceed the formation content
-				const auto properLoad = formationContent.size() / threadWokerNumber;
-				const auto extraLoad = formationContent.size() % threadWokerNumber;
-				auto currentIt = formationContent.begin();
-				std::vector<std::future<bool>> results;
-				results.reserve(threadWokerNumber);
-				for (std::size_t i = 0; i < threadWokerNumber - 1; i++, std::advance(currentIt, properLoad)) {
-					results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), string_array_t(currentIt, currentIt + properLoad), serialThisTurn));
-				}
-				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(alreadyGenerated), string_array_t(currentIt, currentIt + properLoad + extraLoad), serialThisTurn));
-				// Wait future
-				std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
 			}
 		} else {
 			// Proceed the generated content
@@ -296,9 +282,9 @@ private:
 				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(generatedSlice), std::cref(formationContent), serialThisTurn)); });
 			// Wait future
 			std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
-			// TODO
-			// Optimization
-			alreadyGenerated = std::accumulate(managed.begin(), managed.end(), string_array_t(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; });
+			// Replace already generated
+			replace_from_to(std::accumulate(managed.begin(), managed.end(), string_array_t(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; }),
+							alreadyGenerated);
 		}
 	}
 
@@ -336,7 +322,7 @@ private:
 	/// <remarks> BlueWingTan, 2020/4/20. </remarks>
 	/// <param name="contents"> The contents. </param>
 	/// <returns> True if it succeeds, false if it fails. </returns>
-	bool serial(const string_array_t& contents) {
+	bool password_serial(const string_array_t& contents) {
 		// Make sure serial_safe_impl already returned
 		// to prevent early extract contents
 		std::lock_guard<std::mutex> lock(_serialLock);
@@ -619,7 +605,7 @@ private:
 				if (file) {
 					string_array_t content;
 					std::copy(std::istream_iterator<std::string>(file), std::istream_iterator<std::string>(), std::back_inserter(content));
-					serial(content);
+					password_serial(content);
 				}
 			}
 		} catch (const std::exception& ex) {
