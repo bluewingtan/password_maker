@@ -51,13 +51,11 @@ In cryptanalysis and computer security, a dictionary attack is a form of brute f
 
 ## Changes
 
-The latest version is **v0.0.2**.
+The latest version is **v0.0.3**.
 
-- Fix the timing of serialization (#1)
-- Use `cbegin`/`cend` to replace `begin`/`end` in const variables loops
-- Remove unusable `_appedLock`
-- Added thread number control parameter when initialize `PasswordMaker`
-- Added command line parameters `-c/--config` and `-t/--thread`
+- Fixed a data race issue that may be caused when the seed length is less than the number of threads (#2)
+- Performance improvement
+- Update Chinese documentation with error link of CHANGELOG
 
 For other changes please refer to [change log](CHANGELOG.md).
 

@@ -9,8 +9,8 @@ endif()
 # The version number.
 set (Password_Maker_VERSION_MAJOR 0)
 set (Password_Maker_VERSION_MINOR 0)
-set (Password_Maker_VERSION_PATCH 2)
-set (Password_Maker_VERSION "0.0.2")
+set (Password_Maker_VERSION_PATCH 3)
+set (Password_Maker_VERSION "0.0.3")
 string(TIMESTAMP Password_Maker_COMPILE_DATE "%Y-%m-%d")
 
 project("password_maker" LANGUAGES CXX VERSION ${Password_Maker_VERSION})
