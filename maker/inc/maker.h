@@ -249,6 +249,34 @@ private:
 		return true;
 	}
 
+	/// <summary> Multi processor. </summary>
+	/// <remarks> BlueWingTan, 2020/4/21. </remarks>
+	/// <param name="base">		    [in,out] The base. </param>
+	/// <param name="addon">	    The addon. </param>
+	/// <param name="shouldSerial"> True if should serial. </param>
+	void multi_processor(string_array_t& base, const string_array_t& addon, const bool shouldSerial) {
+		const auto threadWokerNumber = _threadPool.size();
+		// Proceed the generated content
+		const auto properLoad = base.size() / threadWokerNumber;
+		const auto extraLoad = base.size() % threadWokerNumber;
+		auto currentIt = base.begin();
+		std::vector<std::future<bool>> results;
+		std::vector<string_array_t> managed;
+		managed.reserve(threadWokerNumber);
+		results.reserve(threadWokerNumber);
+		for (size_t i = 0; i < threadWokerNumber - 1; i++, std::advance(currentIt, properLoad)) {
+			managed.emplace_back(string_array_t(currentIt, currentIt + properLoad));
+		}
+		managed.emplace_back(string_array_t(currentIt, currentIt + properLoad + extraLoad));
+		std::for_each(managed.begin(), managed.end(), [&](auto& generatedSlice) {
+			results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(generatedSlice), std::cref(addon), shouldSerial)); });
+		// Wait future
+		std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
+		// Replace already generated
+		replace_from_to(std::accumulate(managed.begin(), managed.end(), string_array_t(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; }),
+						base);
+	}
+
 	/// <summary> Map to processor. </summary>
 	/// <remarks> BlueWingTan, 2020/4/21. </remarks>
 	/// <param name="alreadyGenerated"> [in,out] The already generated. </param>
@@ -260,32 +288,12 @@ private:
 		// check alreadyGenerated and formationContent size
 		// if the size less than threadWokerNumber
 		// then should not start thread pool
-		if (alreadyGenerated.size() < threadWokerNumber) {
-			if (formationContent.size() < threadWokerNumber) {
-				// Single thread to process
-				processor(alreadyGenerated, formationContent, serialThisTurn);
-			}
-		} else {
-			// Proceed the generated content
-			const auto properLoad = alreadyGenerated.size() / threadWokerNumber;
-			const auto extraLoad = alreadyGenerated.size() % threadWokerNumber;
-			auto currentIt = alreadyGenerated.begin();
-			std::vector<std::future<bool>> results;
-			std::vector<string_array_t> managed;
-			managed.reserve(threadWokerNumber);
-			results.reserve(threadWokerNumber);
-			for (size_t i = 0; i < threadWokerNumber - 1; i++, std::advance(currentIt, properLoad)) {
-				managed.emplace_back(string_array_t(currentIt, currentIt + properLoad));
-			}
-			managed.emplace_back(string_array_t(currentIt, currentIt + properLoad + extraLoad));
-			std::for_each(managed.begin(), managed.end(), [&](auto& generatedSlice) {
-				results.emplace_back(_threadPool.enqueue(&PasswordMaker::processor, this, std::ref(generatedSlice), std::cref(formationContent), serialThisTurn)); });
-			// Wait future
-			std::for_each(results.begin(), results.end(), [](const auto& result) {result.wait(); });
-			// Replace already generated
-			replace_from_to(std::accumulate(managed.begin(), managed.end(), string_array_t(), [&](auto& lhs, auto& rhs) { std::copy(rhs.begin(), rhs.end(), std::back_inserter(lhs)); return lhs; }),
-							alreadyGenerated);
+		if (alreadyGenerated.size() < threadWokerNumber && formationContent.size() < threadWokerNumber) {
+			// Single thread to process
+			processor(alreadyGenerated, formationContent, serialThisTurn);
+			return;
 		}
+		multi_processor(alreadyGenerated, formationContent, serialThisTurn);
 	}
 
 	/// <summary> Loads the configuration. </summary>

@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org).
 
+## v0.0.4 - 2020-04-21
+
+### Added
+
+- Add parameter check (#5)
+
+### Fixed
+
+- Fixed the processing flow (#4)
+
+### Changed
+
+None.
+
 ## v0.0.3 - 2020-04-21
 
 ### Added

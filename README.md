@@ -51,11 +51,10 @@ In cryptanalysis and computer security, a dictionary attack is a form of brute f
 
 ## Changes
 
-The latest version is **v0.0.3**.
+The latest version is **v0.0.4**.
 
-- Fixed a data race issue that may be caused when the seed length is less than the number of threads (#2)
-- Performance improvement
-- Update Chinese documentation with error link of CHANGELOG
+- Add parameter check (#5)
+- Fixed the processing flow (#4)
 
 For other changes please refer to [change log](CHANGELOG.md).
 
