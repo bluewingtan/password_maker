@@ -60,32 +60,40 @@ std::string help_content() {
 	std::string retval;
 	retval += std::string("Password Maker (v") + PASSWORD_MAKER_VERSION + " at " + CMAKE_COMPILE_DATE + " on " + CMAKE_SYSTEM + " " + CMAKE_SYSTEM_VERSION + ")\n";
 	retval += std::string("Compiled with CMake ") + CMAKE_VERSION " and " + CMAKE_COMPILER + " " + CMAKE_COMPILER_VERSION + "\n\n";
-	retval += std::string("A high-performance, customizable, cross-platform and modern C++ password dictionary generator\n");
+	retval += std::string("A high-performance, customizable, cross-platform and modern C++ password dictionary generator\n\n");
 	return retval;
 }
 
-template<typename App, typename Argc, typename Argv>
-int app_parse(App&& app, Argc&& argc, Argv&& argv) {
-	try {
-        app.parse(argc, argv);
-    } catch(const CLI::ParseError &ex) {
-        return app.exit(ex);
-    }
-	return 0;
-}
+struct ExistingFileDistValidator : public CLI::Validator {
+	ExistingFileDistValidator() : Validator("DISTFILE") {
+		func_ = [](std::string& filename) {
+			std::string distFileName = "./config/" + filename;
+			auto path_result = CLI::detail::check_path(distFileName.c_str());
+			if (path_result == CLI::detail::path_type::nonexistant) {
+				return "File does not exist: " + filename;
+			}
+			if (path_result == CLI::detail::path_type::directory) {
+				return "File is actually a directory: " + filename;
+			}
+			return std::string();
+		};
+	}
+};
 
 int main(int argc, char** argv) {
-	CLI::App app{ help_content() };
+	std::cout << help_content();
+
+	CLI::App app{};
 	std::string configFileName{ "config.json" };
 	std::size_t threadNumber{ std::thread::hardware_concurrency() };
+	ExistingFileDistValidator validator;
 
 	app.get_formatter()->column_width(40);
-	app.add_option("-c,--config", configFileName, "The configuration filename in ./dist path", true);
-	app.add_option("-t,--thread", threadNumber, "How many threads should be used to generate the password", true);
+	app.add_option("-c,--config", configFileName, "The configuration filename in ./config path", true)->check(validator);
+	app.add_option("-t,--thread", threadNumber, "How many threads should be used to generate the password", true)->check(CLI::Range(1u, std::thread::hardware_concurrency()));
 
-	app_parse(app, argc, argv);
+	CLI11_PARSE(app, argc, argv);
 
-	std::cout << help_content();
 	bwt::PasswordMaker maker(configFileName, threadNumber);
 	maker.generate();
 	return 0;
